@@ -1,11 +1,27 @@
 <?php
 declare(strict_types=1);
 
-// Update these values if your local or hosted MySQL configuration differs.
-const DB_HOST = 'localhost';
-const DB_NAME = 'ionic_students_api';
-const DB_USER = 'root';
-const DB_PASS = '';
+// Auto-detect environment: Local XAMPP vs x10hosting (elementfx.com)
+$hostHeader = $_SERVER['HTTP_HOST'] ?? '';
+$isHosting = (strpos($hostHeader, 'elementfx.com') !== false || strpos($hostHeader, 'x10') !== false);
+
+if ($isHosting) {
+    // ==========================================
+    // x10hosting (Live Production) Settings
+    // ==========================================
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'rsjxgeti_taradb');
+    define('DB_USER', 'rsjxgeti_taradb');
+    define('DB_PASS', '9DJcvDUkq3Wyvjj7eeSD');
+} else {
+    // ==========================================
+    // Local XAMPP Settings
+    // ==========================================
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'ionic_students_api');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+}
 
 function get_db_connection(): PDO
 {

@@ -196,7 +196,7 @@ try {
     }
 
     error_log('Students API database error: ' . $e->getMessage());
-    respond(500, ['success' => false, 'message' => 'Database error. Check the PHP error log.']);
+    respond(500, ['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
 } catch (Throwable $e) {
     error_log('Students API unexpected error: ' . $e->getMessage());
     respond(500, ['success' => false, 'message' => 'Internal server error.']);
