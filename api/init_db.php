@@ -1,11 +1,17 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-try {
-    $pdo = new PDO('mysql:host=localhost;charset=utf8mb4', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+require_once __DIR__ . '/config.php';
 
-    $sqlFile = __DIR__ . '/../sql/taracommute_schema.sql';
+try {
+    $pdo = get_db_connection();
+
+    // Prefer hosting SQL if present (safe for shared hosting without CREATE DATABASE permissions)
+    $sqlFile = __DIR__ . '/../sql/taracommute_hosting.sql';
+    if (!file_exists($sqlFile)) {
+        $sqlFile = __DIR__ . '/../sql/taracommute_schema.sql';
+    }
+
     if (!file_exists($sqlFile)) {
         throw new Exception("SQL file not found at: $sqlFile");
     }
@@ -13,8 +19,7 @@ try {
     $sql = file_get_contents($sqlFile);
     $pdo->exec($sql);
 
-    // Verify created tables
-    $pdo->exec("USE ionic_students_api");
+    // Verify created tables in the current connected database
     $stmt = $pdo->query("SHOW TABLES");
     $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
