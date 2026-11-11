@@ -107,3 +107,4 @@ INSERT INTO campus_locations (name, category, latitude, longitude, distance_km) 
 ('Cabanatuan Central Transport Terminal', 'Terminal', 15.485000, 120.963000, 4.10),
 ('SM Mega Center Cabanatuan', 'Mall', 15.486000, 120.967000, 6.10),
 ('Santa Rosa Junction', 'Transit Hub', 15.420000, 120.938000, 3.40);
+
